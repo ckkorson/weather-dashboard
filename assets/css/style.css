@@ -17,7 +17,7 @@
     padding: 5px;
 }
 
-.search-btn {
+#search-btn {
     background-color: rgb(64, 105, 159);
     color: white;
     margin-bottom: 30px;
