@@ -6,13 +6,13 @@
 }
 
 #sidebar h2 {
-    margin: 0px;
+    margin: 10px;
     padding: 0px;
 }
 
 #city-search {
-    /* margin: 10px; */
-    margin: 10px 10px 10px 0px;
+    margin: 10px;
+    /* margin: 10px 10px 10px 0px; */
     font-size: 20px;
     padding: 5px;
 }
@@ -20,12 +20,14 @@
 .search-btn {
     background-color: rgb(64, 105, 159);
     color: white;
+    margin-bottom: 30px;
 }
 
 .all-btn {
     text-align: center;
     padding: 5px;
-    margin: 10px 10px 10px 0px;
+    /* margin: 10px 10px 10px 0px; */
+    margin: 10px;
     font-size: 20px;
     border-radius: 10px;
     border: 3px black solid;
@@ -33,4 +35,10 @@
 
 .city-btn {
     background-color: gray;
+}
+
+.current-forecast {
+    margin: 10px;
+    padding: 10px;
+    border: 3px black solid;
 }
