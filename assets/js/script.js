@@ -19,6 +19,9 @@ function getApi() {
 
 function currentWeather(data) {
     document.getElementById('city').innerHTML = data.name
+    document.getElementById('temp').innerHTML = 'Temp: ' + data.main.temp + '°F'
+    document.getElementById('wind').innerHTML = 'Wind: ' + data.wind.speed + ' mph'
+    document.getElementById('humidity').innerHTML = 'Humidity: ' + data.main.humidity + '%'
 }
 
 searchBtn.addEventListener('click', function(){
