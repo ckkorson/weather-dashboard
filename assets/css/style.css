@@ -46,3 +46,7 @@
 .all-btn:hover {
     cursor: pointer;
 }
+
+.card {
+    margin: 10px;
+}
