@@ -157,5 +157,13 @@ searchBtn.addEventListener('click', function(){
     recordSearch()
 })
 
+for(i = 0; i < 5; i++) {
+    let oldCityBtn = 'city-' + i
+    document.getElementById(oldCityBtn).addEventListener('click', function(target) {
+        document.getElementById('city-search').value = document.getElementById(oldCityBtn).innerHTML
+        getApi()
+        recordSearch()
+    })
+}
 initialCities()
 getApi()
