@@ -1,5 +1,3 @@
-// let city = 'Knoxville'
-// let weatherUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + city +',usa&units=imperial&APPID=dd267f7775731528762e4ab72ff77aef'
 let searchBtn = document.getElementById('search-btn')
 let listTracker = 0
 
@@ -13,12 +11,10 @@ function getApi() {
       })
     .then(function(data) {
         console.log(data)
-        // console.log(data.name)
         currentWeather(data)
         let cityLat = data.coord.lat
         let cityLon = data.coord.lon
         weatherForecast(cityLat,cityLon)
-        // recordSearch(data)
     })
 }
 
@@ -26,8 +22,6 @@ function currentWeather(data) {
     let weatherImg = 'http://openweathermap.org/img/wn/' + data.weather[0].icon + '.png'
     document.getElementById('city').innerHTML = data.name
     document.getElementById('city-img').setAttribute('src', weatherImg)
-    // let cityTemp = Math.round(data.main.temp)
-    // let cityTempArr = cityTemp.split(".")
     document.getElementById('temp').innerHTML = 'Temp: ' + Math.round(data.main.temp) + '°F'
     document.getElementById('wind').innerHTML = 'Wind: ' + Math.round(data.wind.speed) + ' mph'
     document.getElementById('humidity').innerHTML = 'Humidity: ' + data.main.humidity + '%'
@@ -46,37 +40,16 @@ function weatherForecast(cityLat,cityLon) {
             let dayId = 'day-' + i
             document.getElementById(dayId).innerHTML = moment().add(i + 1, 'days').format('ddd')
             dailyForecast(data, i, dayId)
-            // console.log(listTracker)
         }
-        // for(let i = 0; i < data.list.length; i++) {
-        //     let num = i + 1
-        //     let dayId = 'day-' + num
-        //     let iconId = 'icon-' + num
-        //     let day = i * 8
-        //     let weatherImg = 'http://openweathermap.org/img/wn/' + data.list[day+4].weather[0].icon + '.png'
-        //     // console.log(weatherImg)
-        //     document.getElementById(dayId).innerHTML = moment(data.list[day].dt_txt).format('ddd')
-        //     document.getElementById(iconId).setAttribute('src', weatherImg)
-        //     dailyTemp(data, day, num)
-        //     windSpeed(data, day, num)
-        //     humidityRange(data, day, num)
-        // }
     })
 }
 
 function dailyForecast(data, i, dayId) {
     let indexArr = []
     for(let j = listTracker; j < data.list.length; j++) {
-        // console.log(document.getElementById(dayId).innerHTML)
-        // console.log(moment(data.list[j].dt_text).format('ddd'))
-        // console.log(data.list[j].dt_txt)
         if(moment(data.list[j].dt_txt).format('ddd') == document.getElementById(dayId).innerHTML) {
             indexArr.push(j)
         }
-        // else if(moment(data.list[j].dt).format('ddd') > document.getElementById(dayId).innerHTML) {
-        //     listTracker = j
-        //     return listTracker
-        // }
     }
     console.log(indexArr)
     dailyTemp(data, i, indexArr)
@@ -150,7 +123,6 @@ function initialCities() {
     for(let i = 0; i < 5; i++) {
         let cityId = 'city-' + i
         let cityKey = 'city-' + i
-        // console.log(window.localStorage.getItem(cityKey))
         if (window.localStorage.getItem(cityKey) != null) {
             document.getElementById(cityId).innerHTML = window.localStorage.getItem(cityKey)
         }
