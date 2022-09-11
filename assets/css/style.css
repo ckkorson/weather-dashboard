@@ -49,4 +49,7 @@
 
 .card {
     margin: 10px;
+    background-color: rgb(37, 113, 140);
+    max-width: 20%;
+    padding: 5px;
 }
