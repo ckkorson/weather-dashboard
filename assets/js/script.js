@@ -17,6 +17,7 @@ function getApi() {
         let cityLat = data.coord.lat
         let cityLon = data.coord.lon
         weatherForecast(cityLat,cityLon)
+        // recordSearch(data)
     })
 }
 
@@ -46,7 +47,7 @@ function weatherForecast(cityLat,cityLon) {
             let iconId = 'icon-' + num
             let day = i * 8
             let weatherImg = 'http://openweathermap.org/img/wn/' + data.list[day+4].weather[0].icon + '.png'
-            console.log(weatherImg)
+            // console.log(weatherImg)
             document.getElementById(dayId).innerHTML = moment(data.list[day].dt_txt).format('ddd')
             document.getElementById(iconId).setAttribute('src', weatherImg)
             dailyTemp(data, day, num)
@@ -117,8 +118,44 @@ function humidityRange(data, day, num) {
     document.getElementById(humidId).innerHTML = 'Humidity: ' + Math.round(lowHumid) + '-' + Math.round(highHumid) + '%'
 }
 
+function initialCities() {
+    for(let i = 0; i < 5; i++) {
+        let cityId = 'city-' + i
+        let cityKey = 'city-' + i
+        // console.log(window.localStorage.getItem(cityKey))
+        if (window.localStorage.getItem(cityKey) != null) {
+            document.getElementById(cityId).innerHTML = window.localStorage.getItem(cityKey)
+        }
+    }
+    if (window.localStorage.getItem('city-0') != null) { 
+        document.getElementById('city-search').value = window.localStorage.getItem('city-0')
+    }
+}
+
+function recordSearch(data) {
+    setCities()
+    document.getElementById('city-0').innerHTML = document.getElementById('city-search').value
+    for(let i = 1; i < 5; i++) {
+        let num = i - 1
+        let cityKey = 'city-' + num
+        let cityId = 'city-' + i
+        document.getElementById(cityId).innerHTML = window.localStorage.getItem(cityKey)
+    }
+    setCities()
+}
+
+function setCities() {
+    for(let i = 0; i < 5; i++) {
+        let cityKey = 'city-' + i
+        let cityId = 'city-' + i
+        window.localStorage.setItem(cityKey,document.getElementById(cityId).innerHTML)
+    }
+}
+
 searchBtn.addEventListener('click', function(){
     getApi()
+    recordSearch()
 })
 
+initialCities()
 getApi()
