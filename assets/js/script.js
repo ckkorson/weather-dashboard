@@ -1,21 +1,29 @@
 let searchBtn = document.getElementById('search-btn')
-let listTracker = 0
+var validCity = true
 
 function getApi() {
     let city = document.getElementById('city-search').value
-    console.log(city)
     let weatherUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + city +',usa&units=imperial&APPID=dd267f7775731528762e4ab72ff77aef'
     fetch(weatherUrl)
     .then(function (response) {
-        return response.json();
-      })
-    .then(function(data) {
-        console.log(data)
-        currentWeather(data)
-        let cityLat = data.coord.lat
-        let cityLon = data.coord.lon
-        weatherForecast(cityLat,cityLon)
+        if(response.ok) {
+            response.json()
+            .then(function(data) {
+                currentWeather(data)
+                let cityLat = data.coord.lat
+                let cityLon = data.coord.lon
+                weatherForecast(cityLat,cityLon)
+            })
+        }
+        else {
+            response.json()
+            .then(function(data) {
+                alert(data.message)
+                validCity = false
+            })
+        }
     })
+    console.log(validCity)
 }
 
 function currentWeather(data) {
@@ -35,7 +43,6 @@ function weatherForecast(cityLat,cityLon) {
         return response.json()
     })
     .then(function(data) {
-        console.log(data)
         for(let i = 0; i < 5; i++) {
             let dayId = 'day-' + i
             document.getElementById(dayId).innerHTML = moment().add(i + 1, 'days').format('ddd')
@@ -46,12 +53,11 @@ function weatherForecast(cityLat,cityLon) {
 
 function dailyForecast(data, i, dayId) {
     let indexArr = []
-    for(let j = listTracker; j < data.list.length; j++) {
+    for(let j = 0; j < data.list.length; j++) {
         if(moment(data.list[j].dt_txt).format('ddd') == document.getElementById(dayId).innerHTML) {
             indexArr.push(j)
         }
     }
-    console.log(indexArr)
     dailyTemp(data, i, indexArr)
     windSpeed(data, i, indexArr)
     humidityRange(data, i, indexArr)
@@ -153,8 +159,13 @@ function setCities() {
 }
 
 searchBtn.addEventListener('click', function(){
+    validCity = true
     getApi()
-    recordSearch()
+    console.log(validCity)
+    if(validCity) {
+        recordSearch()
+    }
+    // recordSearch()
 })
 
 for(i = 0; i < 5; i++) {
@@ -162,7 +173,6 @@ for(i = 0; i < 5; i++) {
     document.getElementById(oldCityBtn).addEventListener('click', function(target) {
         document.getElementById('city-search').value = document.getElementById(oldCityBtn).innerHTML
         getApi()
-        recordSearch()
     })
 }
 initialCities()

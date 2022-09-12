@@ -53,3 +53,7 @@
     max-width: 20%;
     padding: 5px;
 }
+
+#right-now {
+    text-decoration: underline;
+}
